@@ -30,7 +30,7 @@ const Records = () =>{
             </TouchableOpacity>
                 
             <Text > Estrutura records </Text>
-           
+
             
         </View>
       </>
