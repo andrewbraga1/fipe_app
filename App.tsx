@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, View,Text } from 'react-native';
+import { StatusBar, View,Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { AppLoading } from 'expo';
 import {
   Roboto_400Regular,
@@ -24,12 +24,14 @@ export default function App() {
     return <AppLoading />;
   } else {
     return (
+     
       <>
+      
         <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
         
         <Routes />
       </>
-      
+  
     );
   }
 }

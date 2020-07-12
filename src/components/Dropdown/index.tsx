@@ -10,10 +10,11 @@ const Dropdown = (props: any) => {
         value: null,
     };
 
-    const [ _item, setItem ] = useState<string>(props.item);
-    
+    const [ _itemValue, setItemValue ] = useState<string>('');
+       
     const handleSelectItem = (value: string) => {
-        setItem(value);
+      setItemValue(value);
+      props.onSelectItem(value); 
     };
 
   return (
@@ -21,7 +22,7 @@ const Dropdown = (props: any) => {
         <RNPickerSelect
                 placeholder={placeholder}
                 items={props.itemsList}
-                value={_item}
+                value={_itemValue}
                 onValueChange={value => {handleSelectItem(value)}}
                 style={{
                 ...styles.picker,
@@ -31,6 +32,7 @@ const Dropdown = (props: any) => {
                 Icon={() => {
                 return <Icon name="arrow-down" size={24} color="#FFF" />;
                 }}
+               
             ></RNPickerSelect>
     </View>
   )
