@@ -10,10 +10,11 @@ const Dropdown = (props: any) => {
         value: null,
     };
 
-    const [ _item, setItem ] = useState<string>(props.item);
-    
+    const [ _itemValue, setItemValue ] = useState<string>('');
+       
     const handleSelectItem = (value: string) => {
-        setItem(value);
+      setItemValue(value);
+      props.onSelectItem(value); 
     };
 
   return (
@@ -21,50 +22,61 @@ const Dropdown = (props: any) => {
         <RNPickerSelect
                 placeholder={placeholder}
                 items={props.itemsList}
-                value={_item}
+                value={_itemValue}
                 onValueChange={value => {handleSelectItem(value)}}
                 style={{
                 ...styles.picker,
-                iconContainer: {
-                  top: 8,
-                  right: 8,
-                  borderBottomRightRadius: 10,
-                  borderTopRightRadius: 10,
-                },
+                iconContainer: styles.iconContainer,
                 placeholder: styles.text
                 }}
-                useNativeAndroidPickerStyle={false}
                 Icon={() => {
                 return <Icon name="arrow-down" size={24} color="#FFF" />;
                 }}
-            />
+               
+            ></RNPickerSelect>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 8,
-        paddingBottom: 8,
-        paddingHorizontal: 10,
+        //paddingTop: 8,
+        //paddingBottom: 8,
+        //paddingHorizontal: 10,
         backgroundColor: '#34CB79',
         height: 60,
         borderRadius: 10,
         color:'#fff',
         
     },
+    inputIOS: {
+      fontSize: 16,
+      color: '#fff',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+      fontSize: 16,
+      color: '#fff',
+      paddingRight: 30,    // to ensure the text is never behind the icon
+    },
+    
     text: {
-        top:8,
-        left: 10,
-        justifyContent: 'center',
+        //top:8,
+        //left: 8,
+        //bottom:8,
+        //justifyContent: 'center',
         color: '#FFF',
         fontFamily: 'Roboto_500Medium',
         fontSize: 16,
       },
-    picker:{
-      flex: 1,
+    picker:{},
+    
+    iconContainer:{
+      zIndex:-10,
       height: 60,
       width: 60,
+      borderBottomRightRadius: 10,
+      borderTopRightRadius: 10,
       backgroundColor: 'rgba(0, 0, 0, 0.1)',
       justifyContent: 'center',
       alignItems: 'center'
