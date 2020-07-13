@@ -13,7 +13,7 @@ import {
       
     } from 'react-native';
 import{ Feather as Icon } from '@expo/vector-icons';
-import  { useNavigation } from '@react-navigation/native';
+import  { useNavigation,useRoute } from '@react-navigation/native';
 import api from '../../services/api';
 import Dropdown from '../../components/Dropdown';
 import Constants from 'expo-constants';
@@ -35,12 +35,24 @@ interface VehicleData  {
   id: number
 }
 
+interface PhotoData{
+  filename:string,
+  uri:string,
+}
+
 interface Data {
-  type:string,
-  brand:string,
-  model:string,
-  year:string,
-  plate:string
+  key: string,
+  brand: string,
+  model: string,
+  photos: PhotoData[],
+  plate: string,
+  type: string,
+  year: string,
+  // type:string,
+  // brand:string,
+  // model:string,
+  // year:string,
+  // plate:string
 }
 
 
@@ -74,6 +86,13 @@ const Records = () =>{
   const [plate, setPlate] = useState<string>();
   const [ step2, setStep2 ] = useState<boolean>(false);
   const navigation = useNavigation();
+  
+  const route = useRoute();
+  const routeParams = route.params as Data;
+  console.log(routeParams);
+  
+  //const [data, setData] = useState<Data>({} as Data);
+  
   
   const handleNavigateBack = () =>{
     navigation.goBack();
@@ -154,7 +173,7 @@ const Records = () =>{
     setYear(String(year));
   };
  
-
+  
   if(step2 === false){return (
       <>
       <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -330,6 +349,24 @@ const styles = StyleSheet.create({
       fontFamily: 'Roboto_500Medium',
       fontSize: 16,
     }
+    ,
+
+  item: {
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#eee',
+    height: 120,
+    width: 120,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingTop: 20,
+    paddingBottom: 16,
+    marginRight: 8,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+    textAlign: 'center',
+  }
   });
 
 export default Records;
