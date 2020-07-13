@@ -44,8 +44,7 @@ const CameraC = (props : any) => {
   useEffect(()=>{
     getPermissionAsync().then(()=>{ if ( (photos.length < 1)) {
         alert('Você pode tirar de 1 a 5 fotos para concluir o cadastro.');
-        //console.log(initialData);
-        
+       
     }});
   },[]); 
 
@@ -144,9 +143,6 @@ const CameraC = (props : any) => {
         } as PhotoData) 
         
 
-        // MediaLibrary.getAssetInfoAsync(asset.id).then(info => {
-        // });
-        //console.log(hasPermission);
     }).catch(
         (error:Error) => alert(error)
     );
@@ -161,7 +157,7 @@ const CameraC = (props : any) => {
   const save = async (data: Data) => {
     try {
       await AsyncStorage.setItem(data.key, JSON.stringify(data)).then(()=>{
-          alert('Cadastro realiado com sucesso.')
+          Alert.alert('Cadastro realiado com sucesso.')
       })
 
     } catch (e) {

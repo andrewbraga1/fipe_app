@@ -10,7 +10,7 @@ const Dropdown = (props: any) => {
         value: null,
     };
 
-    const [ _itemValue, setItemValue ] = useState<string>('');
+    const [ _itemValue, setItemValue ] = useState<string>(props.value ? props.value : '');
        
     const handleSelectItem = (value: string) => {
       setItemValue(value);

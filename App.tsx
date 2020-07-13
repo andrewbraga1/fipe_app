@@ -36,11 +36,4 @@ export default function App() {
   }
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#7159c1',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+
