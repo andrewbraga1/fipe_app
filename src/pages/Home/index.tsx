@@ -27,7 +27,7 @@ const Home = () =>{
 
   return (
     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      
+       <View style={styles.container} >
           <View style={styles.main}>
            
             <Text style={styles.title}>Seu controle de estoque de veículos</Text>
@@ -60,7 +60,7 @@ const Home = () =>{
             </RectButton>
             
           </View>
-     
+        </View>
     </KeyboardAvoidingView>
   )
 }
@@ -68,7 +68,7 @@ const Home = () =>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 32,
+    padding: 22,
    
   },
 
