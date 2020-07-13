@@ -41,9 +41,13 @@ const Stored = () =>{
     const [ isLoading, setLoading ] = useState<boolean>(false);
     const [ show, setShow ] = useState<boolean>(false);
     const [ sources, setSources] = useState<string[]>([]);
-    const [source, setSource] = useState<string>('');
+    const [ source, setSource] = useState<string>('');
     const [ stored, setStored ] = useState<Stored>({} as Stored);
     const [ allStored, setAllStored ] = useState<Stored[]>([]);
+
+    const route = useRoute();
+    const routeParams = route.params as {reload:boolean};
+    
 
     
     useEffect(()=>{
@@ -97,17 +101,15 @@ const Stored = () =>{
     
     
     const load = async () => {
-        //let source:any = []
+        
         setLoading(true)
         try {
             let datas = await AsyncStorage.getAllKeys().then(res => {return res});
-            //console.log("datas"+JSON.parse(JSON.stringify(datas)));
-                    //setTimeout(() => {
-                
+            
                 if (datas !== null && (Array.isArray(datas) && datas.length > 0) ) {
                 datas = datas.filter( item => typeof item !== 'undefined')
                 datas.map( (item: string) =>{
-                    console.log('chamanda do SetSource');
+                    
                     handleSource(item).then(()=>{
                         handleSources(item).then(()=>{
                             (sources).map( (_srcs: string) =>{
@@ -117,32 +119,30 @@ const Stored = () =>{
                             })
                         })
                     });
-                    console.log('fim do SetSource');
-                    //
+                    
+                    
                 })
-                    
-                    
-                    //setData(data) 
+              
                 }
                   
               } catch (e) {
-                console.error('Falha ao carregar. Tente novamente mais tarde.')
+                alert('Falha ao carregar. Tente novamente mais tarde.')
               }
               setLoading(false)
-           // }, 3000);  
+          
         
         
     }
     const loadData = async (index:string) => {
         
         setLoading(true)
-        console.log((index));
+        
         if (!index) return;
         try {
             
             const info = await AsyncStorage.getItem(index).then((res)=>{return res});
             if (!info) return;
-            console.log("##################");
+           
             let abc  = JSON.parse((info))
             let obj = {
     
@@ -161,18 +161,11 @@ const Stored = () =>{
                     
                 })
             })
-            //return();
             
-            //setSource((JSON.parse(info)));
-            //console.log(source);
-            
-       
-            
-           
         } catch (e) {
             setLoading(false)
-            console.error('Falha ao carregar. Tente novamente mais tarde.')
-            //return {} as Stored  
+            alert('Falha ao carregar. Tente novamente mais tarde.')
+            
         }
     }
    
@@ -196,9 +189,14 @@ const Stored = () =>{
                 
                 <SafeAreaView style={{ flex:1 }}>
                     <View style={styles.container}>
-                        <TouchableOpacity onPress={handleNavigateBack}>
-                            <Icon name="arrow-left" color="#34cb79" size={20}/>
-                        </TouchableOpacity>
+                        <View style={{flexDirection:"row"}}> 
+                            <TouchableOpacity style={{marginRight:8}} onPress={handleNavigateBack}>
+                                <Icon name="arrow-left" color="#34cb79" size={20}/>
+                            </TouchableOpacity>
+                            <Text style={{fontSize: 20,fontFamily: 'Ubuntu_700Bold'}} >
+                                Lista de veículos
+                            </Text>
+                        </View>
                         <View style={styles.itemsContainer}>
                             <ScrollView 
                                 
@@ -215,12 +213,12 @@ const Stored = () =>{
                                    {item.photos[0].uri && 
                                    <Image source={{ uri: item.photos[0].uri }} style={{ width: 42, height: 42 }} />}
                                 <View style={{marginLeft:30}}>
-                                    <Text style={{fontSize:12,marginBottom:6}}>Placas</Text>
+                                    <Text style={{fontSize:12,marginBottom:6}}>Placa</Text>
                                     <Text style={styles.itemTitle}>{item.plate}</Text>
                                 </View>
                                 <View style={{marginLeft:70}}>
                                     <Text style={{fontSize:12,marginBottom:6}}>Categoria</Text>
-                                    <Text style={styles.itemTitle}>{item.type}</Text>
+                                    <Text style={[styles.itemTitle,{textTransform:"capitalize"}]}>{item.type}</Text>
                                 </View>
                                 
                                 </TouchableOpacity>
@@ -238,9 +236,14 @@ const Stored = () =>{
           return(
             <SafeAreaView style={{ flex:1 }}>
                 <View style={styles.container}>
-                    <TouchableOpacity onPress={handleNavigateBack}>
-                                    <Icon name="arrow-left" color="#34cb79" size={20}/>
-                                </TouchableOpacity>  
+                    <View style={{flexDirection:"row"}}> 
+                            <TouchableOpacity style={{marginRight:8}} onPress={handleNavigateBack}>
+                                <Icon name="arrow-left" color="#34cb79" size={20}/>
+                            </TouchableOpacity>
+                            <Text style={{fontSize: 20,fontFamily: 'Ubuntu_700Bold'}} >
+                            Lista de veículos
+                        </Text>
+                    </View>
                     <View style={{ flex: 1, marginLeft:85,marginTop: 300, }}>
                         <Text style={styles.description}>Nenhum item encontrado!</Text>
                         <TouchableOpacity 
@@ -275,17 +278,12 @@ const styles = StyleSheet.create({
       },
     itemsContainer: {
         flex:1,
-        //flexDirection: 'row',
         marginTop: 16,
         marginBottom: 32,
         
     },item: {
         alignItems: 'center',
-        //justifyContent: 'space-between',
         flexDirection: 'row',
-        //textAlign: 'center',
-        //display:'flex',
-        ///
         backgroundColor: '#fff',
         borderWidth: 2,
         borderColor: '#eee',
@@ -294,11 +292,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 16,
         paddingTop: 8,
-        //marginTop: 16,
         marginRight: 8,
-        //alignItems: 'center',
-        //justifyContent: 'space-between',
-    
         textAlign: 'left',
       },
        itemTitle: {
@@ -316,10 +310,9 @@ const styles = StyleSheet.create({
             borderRadius: 8,
             paddingHorizontal: 8,
             paddingTop: 20,
-            //paddingBottom: 16,
             marginRight: 8,
             alignItems: 'center',
-            //justifyContent: 'space-between',
+            
         
             textAlign: 'center',
           },
