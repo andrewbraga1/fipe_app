@@ -45,7 +45,7 @@ $ expo install expo-font @expo-google-fonts/ubuntu @expo-google-fonts/roboto
 
 After merging your receipt request to done, you can delete a branch from yours.
 
-
+[nodejs]: https://nodejs.org/
 [typescript]: https://www.typescriptlang.org/
 [expo]: https://expo.io/
 [rn]: https://facebook.github.io/react-native/
