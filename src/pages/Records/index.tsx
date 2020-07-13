@@ -19,7 +19,7 @@ import Dropdown from '../../components/Dropdown';
 import Constants from 'expo-constants';
 import { TextInputMask } from 'react-native-masked-text';
 import { RectButton } from 'react-native-gesture-handler';
-
+import CameraC from '../../components/CameraC';
 
 interface Item  {
   label: string,
@@ -34,6 +34,15 @@ interface VehicleData  {
   key: string,
   id: number
 }
+
+interface Data {
+  type:string,
+  brand:string,
+  model:string,
+  year:string,
+  plate:string
+}
+
 
 const Records = () =>{
 
@@ -63,6 +72,7 @@ const Records = () =>{
   const [selectedModel, setModel] = useState<string>();
   const [selectedYear, setYear] = useState<string>();
   const [plate, setPlate] = useState<string>();
+  const [ step2, setStep2 ] = useState<boolean>(false);
   const navigation = useNavigation();
   
   const handleNavigateBack = () =>{
@@ -141,11 +151,11 @@ const Records = () =>{
   const handleSelectYear = (year: string) => {
     //console.log(year);
     
-    setYear(year);
+    setYear(String(year));
   };
  
 
-    return (
+  if(step2 === false){return (
       <>
       <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView>
@@ -209,7 +219,7 @@ const Records = () =>{
               </View>
               { (selectedBrand && selectedModel && selectedYear && plate)
                   && ( 
-                      <RectButton style={styles.button} >
+                      <RectButton style={styles.button} onPress={()=>{setStep2(true)}}>
                         <Text style={styles.buttonText}>
                           Próxima etapa
                         </Text>
@@ -225,7 +235,16 @@ const Records = () =>{
         </ScrollView>
       </KeyboardAvoidingView>            
       </>
-    )
+  )}
+  else{
+    return (<CameraC registerData={{
+    type:selectedVehicleType,
+    brand:selectedBrand,
+    model:selectedModel,
+    year:selectedYear,
+    plate:plate
+  } as Data} return={handleNavigateBack}/>)}            
+    
     
 }
 
